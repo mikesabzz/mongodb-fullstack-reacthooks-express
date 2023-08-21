@@ -19,17 +19,31 @@ function Products() {
         fetchProducts();
     }, []);
 
+    const handleDelete = async (productId) => {
+      const response = await fetch(`http://localhost:5000/api/products/${productId}`, {
+          method: 'DELETE',
+      });
+
+      if (response.ok) {
+          console.log('Product deleted successfully');
+          setProduct(prevProducts => prevProducts.filter(item => item._id !== productId));
+      } else {
+          console.error('Error deleting product');
+      }
+  };
+
     if (error) {
         return <div>Error: {error.message}</div>;
     }
 
     return (
         <div className="grid-container">
-          {product.map((item, index) => (
-            <div key={index}>
+          {product.map(item => (
+            <div key={item._id}>
               <h2>{item.title}</h2>
               <p>${item.price}</p>
               <a href={item.description} target="_blank">{item.description}</a>
+              <button onClick={() => handleDelete(item._id)}>Delete</button>
             </div>
           ))}
         </div>
