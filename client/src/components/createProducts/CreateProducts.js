@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './CreateProducts.css';
 
-function CreateProducts() {
+function CreateProducts({ onPostSuccess }) {
     const [postProducts, setPostProducts] = useState({title: "", description: "", price: ""});
 
     const handleSubmit = async (e) => {
@@ -18,6 +18,7 @@ function CreateProducts() {
         if (response.ok) {
           console.log('Post created successfully');
           setPostProducts({ title: "", description: "", price: "" });
+          onPostSuccess();
         } else {
           console.error('Error creating post');
         }

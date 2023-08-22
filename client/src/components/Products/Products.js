@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Products.css';
 
-function Products() {
+function Products({ refresh }) {
     const [product, setProduct] = useState([]);
     const [error, setError] = useState(null);
     const expressURL = 'http://localhost:5000/api/products';
@@ -17,7 +17,7 @@ function Products() {
             }
         };
         fetchProducts();
-    }, []);
+    }, [refresh]);
 
     const handleDelete = async (productId) => {
       const response = await fetch(`http://localhost:5000/api/products/${productId}`, {
